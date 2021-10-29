@@ -204,3 +204,22 @@ gx.hist <- function(gx, main="",ylim=NULL) {
         lines( h0$mids, h1$density, col=i+1 )
     }
 }
+ 
+gx.scatterplots.limma <- function(tab1, tab2, use.smoothscatter=TRUE, cex=1, lab.cex=1, cex.main=1.2,
+                              main="", cex.axis=1, nlab=15, axes=TRUE, xlim= NULL, ylim=NULL, xlab="", ylab=""){
+
+    mm<-match(rownames(tab1), rownames(tab2))
+    tab2 <- na.omit(tab2[mm,])
+
+    mm2 <- match(rownames(tab2), rownames(tab1))
+    tab1 <- na.omit(tab1[mm2,])
+
+    if(use.smoothscatter){
+        smoothScatter(tab1$logFC, tab2$logFC, nbin=64, nrpoints = 0)
+    } else {
+        plot(x=tab1$logFC, y=tab2$logFC, pch = 19, cex=0.4*cex, xlim=xlim, ylim=ylim,
+             col="blue", xlab=xlab, ylab=ylab, main=main, cex.main=cex.main,
+             cex.axis=cex.axis, axes=axes)
+    }
+
+}
