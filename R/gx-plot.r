@@ -205,7 +205,7 @@ gx.hist <- function(gx, main="",ylim=NULL) {
     }
 }
  
-gx.scatterplots.limma <- function(tab1, tab2, use.smoothscatter=TRUE, cex=1, lab.cex=1, cex.main=1.2,
+gx.scatterplots.limma <- function(tab1, tab2, use.smoothscatter=TRUE, bandwith=NULL, cex=1, lab.cex=1, cex.main=1.2,
                               main="", cex.axis=1, nlab=15, axes=TRUE, xlim= NULL, ylim=NULL, xlab="", ylab=""){
 
     mm<-match(rownames(tab1), rownames(tab2))
@@ -216,6 +216,10 @@ gx.scatterplots.limma <- function(tab1, tab2, use.smoothscatter=TRUE, cex=1, lab
 
     if(use.smoothscatter){
         smoothScatter(tab1$logFC, tab2$logFC, nbin=64, nrpoints = 0)
+        if(!is.null(bandwith)){
+            smoothScatter(tab1$logFC, tab2$logFC, nbin=64, nrpoints = 0, bandwith = bandwith)
+        }
+
     } else {
         plot(x=tab1$logFC, y=tab2$logFC, pch = 19, cex=0.4*cex, xlim=xlim, ylim=ylim,
              col="blue", xlab=xlab, ylab=ylab, main=main, cex.main=cex.main,
@@ -223,3 +227,4 @@ gx.scatterplots.limma <- function(tab1, tab2, use.smoothscatter=TRUE, cex=1, lab
     }
 
 }
+
