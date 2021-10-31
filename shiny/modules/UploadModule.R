@@ -333,11 +333,12 @@ UploadModuleServer <- function(id,
                 ##    ggplot2::geom_density() + ggplot2::xlab("log2(1+counts)") +
                 ##    ggplot2::theme( legend.position = "none") +
                 ##    ggplot2::ggtitle("COUNTS", subtitle=tt2)
-                
+                xx <- as.data.frame(xx)
                 ggplot2::ggplot(xx, ggplot2::aes(x=xx[,1], y=xx[,2])) +
                     ggplot2::stat_density2d(aes(fill = ..density..^0.25), geom = "tile", contour = FALSE, n = 200) +
                     ggplot2::scale_fill_continuous(low = "white", high = "dodgerblue4") +
-                    ggplot2::ggtitle("SMOOTHSCATTER")     
+                    xlab("Sample 1")  + ylab("Sample 2") +
+                    ggplot2::ggtitle("SMOOTHSCATTER") + guides(fill=guide_legend(title="density"))    
             })
 
             output$phenoStats <- shiny::renderPlot({
