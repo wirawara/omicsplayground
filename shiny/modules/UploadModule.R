@@ -329,10 +329,15 @@ UploadModuleServer <- function(id,
                 suppressWarnings( dc <- data.table::melt(xx) )
                 dc$value[dc$value==0] <- NA
                 tt2 <- paste(nrow(counts),"genes x",ncol(counts),"samples")
-                ggplot2::ggplot(dc, ggplot2::aes(x=value, color=Var2)) +
-                    ggplot2::geom_density() + ggplot2::xlab("log2(1+counts)") +
-                    ggplot2::theme( legend.position = "none") +
-                    ggplot2::ggtitle("COUNTS", subtitle=tt2)
+                # ggplot2::ggplot(dc, ggplot2::aes(x=value, color=Var2)) +
+                #    ggplot2::geom_density() + ggplot2::xlab("log2(1+counts)") +
+                #    ggplot2::theme( legend.position = "none") +
+                #    ggplot2::ggtitle("COUNTS", subtitle=tt2)
+                
+                ggplot2::ggplot(xx, ggplot2::aes(x=xx[,1], y=xx[,2])) +
+                ggplo2::stat_density2d(aes(fill = ..density..^0.25), geom = "tile", contour = FALSE, n = 200) +
+                ggplot2::scale_fill_continuous(low = "white", high = "dodgerblue4")
+                      
             })
 
             output$phenoStats <- shiny::renderPlot({
